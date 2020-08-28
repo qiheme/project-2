@@ -3,31 +3,42 @@ $(document).ready(() => {
   const signUpForm = $("form.signup");
   const emailInput = $("input#email-input");
   const passwordInput = $("input#password-input");
+  const cityInput = $("input#city-input");
+  const stateInput = $("#state-input");
+  const zipInput = $("input#zip-input");
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", event => {
     event.preventDefault();
     const userData = {
       email: emailInput.val().trim(),
-      password: passwordInput.val().trim()
+      password: passwordInput.val().trim(),
+      city: cityInput.val().trim(),
+      state: stateInput.find(":selected").val(),
+      zip: zipInput.val().trim()
     };
-
-    if (!userData.email || !userData.password) {
+    if (
+      !userData.email ||
+      !userData.password ||
+      !userData.city ||
+      !userData.state ||
+      !userData.zip
+    ) {
       return;
+      // todo: Add error "Empty form fields"
     }
     // If we have an email and password, run the signUpUser function
-    signUpUser(userData.email, userData.password);
+    signUpUser(userData);
     emailInput.val("");
     passwordInput.val("");
+    cityInput.val("");
+    zipInput.val("");
   });
 
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
-  function signUpUser(email, password) {
-    $.post("/api/signup", {
-      email: email,
-      password: password
-    })
+  function signUpUser(data) {
+    $.post("/api/signup", data)
       .then(() => {
         window.location.replace("/members");
         // If there's an error, handle it by throwing up a bootstrap alert
