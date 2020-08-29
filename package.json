@@ -1,5 +1,5 @@
 {
-  "name": "1-Passport-Example",
+  "name": "gameswap",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apicalypse": "^0.1.6",
     "bcryptjs": "2.4.3",
     "express": "^4.17.0",
     "express-session": "^1.16.1",
